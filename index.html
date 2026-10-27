@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>توزيع الحسابات للموظفين</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="page-shell">
+       
+
+        <section class="card">
+
+        <div class="top-bar">
+            <div class="logo-wrap">
+                <img src="assets/شعار_جامعة_بني_سويف.png" alt="شعار جامعة بني سويف" class="logo university-logo">
+            </div>
+            <div class="logo-wrap">
+                <img src="assets/شعار_شبكة_جامعة_بني_سويف.jpeg" alt="شعار شبكة جامعة بني سويف" class="logo network-logo">
+            </div>
+        </div>
+
+
+            <div class="card-header">
+                <h1>توزيع الحسابات لجميع العاملين بالجامعة</h1>
+            </div>
+
+            <form id="nationalIdForm" novalidate>
+                <label for="nationalId">الرقم القومي</label>
+                <input
+                    id="nationalId"
+                    name="nationalId"
+                    type="text"
+                    maxlength="14"
+                    placeholder="أدخل الرقم القومي 14 رقم"
+                    required
+                    aria-describedby="idHelp"
+                >
+
+                <small id="idHelp">يرجى إدخال رقم قومي صحيح مكون من 14 رقم فقط.</small>
+                <div id="errorMessage" class="error-message" aria-live="polite"></div>
+
+                <button type="submit">الحصول على الحساب</button>
+            </form>
+
+            <div id="accountResult" class="account-result hidden" aria-live="polite">
+                <h2>بيانات الحساب</h2>
+                <div class="account-row">
+                    <span>الاسم بالكامل</span>
+                    <strong id="fullNameValue">-</strong>
+                </div>
+                <div class="account-row">
+                    <span>اسم المستخدم</span>
+                    <strong id="usernameValue">-</strong>
+                </div>
+                <div class="account-row">
+                    <span>كلمة المرور</span>
+                    <strong id="passwordValue">-</strong>
+                </div>
+                <div class="account-row">
+                    <span>الكليه التابع لها</span>
+                    <strong id="FacultyValue">-</strong>
+                </div>
+            </div>
+        </section>
+    </main>
+
+
+    <footer class="site-footer">
+    <div class="footer-content">
+
+        <div class="footer-title">
+            <span>تم تطوير وتنفيذ النظام بواسطة</span>
+        </div>
+
+        <div class="engineers">
+           
+
+            <div class="engineer">
+                <div class="engineer-icon">👨‍💻</div>
+                <div>
+                    <h4>Eng. Mahmoud Dessoki</h4>
+                    <p>Network Engineer</p>
+                </div>
+            </div>
+
+             <div class="engineer">
+                <div class="engineer-icon">👨‍💻</div>
+                <div>
+                    <h4>Eng. Kareem Rabee</h4>
+                    <p>Network Engineer</p>
+                </div>
+            </div>
+
+            <div class="engineer">
+                <div class="engineer-icon">👨‍💻</div>
+                <div>
+                    <h4>Eng. Khalid Eid</h4>
+                    <p>Security Engineer</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-line"></div>
+
+        <p class="footer-copy">
+            © 2026 Information Network — جميع الحقوق محفوظة
+        </p>
+
+    </div>
+</footer>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
