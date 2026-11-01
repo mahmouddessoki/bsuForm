@@ -32,7 +32,6 @@ form.addEventListener('submit', function (event) {
     event.preventDefault();
 
     const value = nationalIdInput.value.trim();
-    console.log(value);
 
     if (!/^\d{14}$/.test(value)) {
         errorMessage.textContent = 'الرقم القومي غير صحيح. يجب أن يتكون من 14 رقم فقط.';
@@ -43,16 +42,16 @@ form.addEventListener('submit', function (event) {
 
     errorMessage.textContent = '';
 
-    searchUser(value).then(user => {
+    loadUser(value).then(user => {
         if (user) {
             usernameValue.textContent = user.UserName;
             passwordValue.textContent = user.Password;
             fullNameValue.textContent = user['Full Name'] || '-';
             FacultyValue.textContent = user.Faculty;
+            accountResult.classList.remove('hidden');
         } else {
             errorMessage.textContent = 'لم يتم العثور على مستخدم لهذا الرقم القومي.';
         }
-        accountResult.classList.remove('hidden');
     });
 });
 
@@ -70,36 +69,67 @@ nationalIdInput.addEventListener('input', function () {
 
 let users = [];
 
-async function loadUsers() {
-    const response = await fetch("./assets/BSU_Users.xlsx");
+async function loadUser(nationalId) {
+    const url =
+        "https://docs.google.com/spreadsheets/d/17PfOr8GuGkyn0O9h48FxtHTOPWaj9znH/export?format=xlsx&gid=1438745695";
+
+    const response = await fetch(url);
 
     if (!response.ok) {
         throw new Error(`Failed to load Excel: ${response.status}`);
     }
 
     const buffer = await response.arrayBuffer();
-    const workbook = XLSX.read(buffer, { type: "array" });
+
+    const workbook = XLSX.read(buffer, {
+        type: "array"
+    });
 
     const sheet = workbook.Sheets[workbook.SheetNames[0]];
 
-    users = XLSX.utils.sheet_to_json(sheet, {
+    const users = XLSX.utils.sheet_to_json(sheet, {
         defval: ""
     });
 
-    console.log("Users loaded:", users.length);
+
+    const user = users.find(row =>
+        String(row.Password).trim() === String(nationalId).trim()
+    );
+
+    return user || null;
 }
 
 // Search and return the matching row as an object
-async function searchUser(nationalId) {
-    if (users.length === 0) {
-        await loadUsers();
+
+
+
+
+document.addEventListener("keydown", function (e) {
+    // F12
+    if (e.key === "F12") {
+        e.preventDefault();
+        return false;
     }
 
-    const user = users.find(row =>
-        String(row.Password ?? "").toLowerCase() ===
-        nationalId.trim().toLowerCase()
-    );
+    // Ctrl + Shift + I
+    if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "i") {
+        e.preventDefault();
+        return false;
+    }
 
-    return user ?? null;
-}
+    // Ctrl + Shift + J
+    if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "j") {
+        e.preventDefault();
+        return false;
+    }
 
+    // Ctrl + U (View Source)
+    if (e.ctrlKey && e.key.toLowerCase() === "u") {
+        e.preventDefault();
+        return false;
+    }
+});
+
+document.addEventListener("contextmenu", function (e) {
+    e.preventDefault();
+});
